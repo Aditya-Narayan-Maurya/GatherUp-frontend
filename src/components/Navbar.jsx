@@ -1,7 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  let navigate=useNavigate();
+  let userId=localStorage.getItem("userId");
+  let logout=()=>{
+    localStorage.removeItem("userId");
+    navigate("/login");
+  }
   return (
     <div className='flex justify-between bg-amber-50 h-16 '>
       <aside className='w-[30%]'>
@@ -9,8 +15,19 @@ const Navbar = () => {
       </aside>
       <ul className='flex justify-end text-2xl mr-5 '>
         <li className='p-2 m-2 mr-4'><Link to="/">Home</Link></li>
-        <li className='p-2 m-2 mr-4'><Link to="/register">Register</Link></li>
-        <li className='p-2 m-2 mr-4'><Link to="/login">Login</Link></li>
+         {
+          userId
+           ? 
+           <>
+           <li className='p-2 m-2 mr-4'><Link to="/" onClick={logout}>Logout</Link></li>
+           </>
+           :
+           <>
+           <li className='p-2 m-2 mr-4'><Link to="/register">Register</Link></li>
+           <li className='p-2 m-2 mr-4'><Link to="/login">Login</Link></li>
+           </>
+         }
+        
       </ul>
     </div>
   )

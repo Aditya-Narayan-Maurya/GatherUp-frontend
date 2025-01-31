@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -7,30 +9,57 @@ const Login = () => {
     email:"",
     password:"",
   });
+
+  let [allRegisteredUser,setAllRegisteredUser]=useState(null);
+
   let {email,password}=loginData;
   let handleChange=(e)=>{
          let {name,value}=e.target;
          setLoginData({...loginData,[name]:value});
   }
 
+  useEffect(()=>{
+            async function  fetchAllUser(){
+                  let {data}=await axios.get("http://localhost:8181/users");
+                  // console.log(data);
+                  setAllRegisteredUser(data);
+              }
+              fetchAllUser();
+  },[])
+
   let handleSubmit=(e)=>{
           e.preventDefault();
-          console.log(loginData);
-          setLoginData({
-            email:"",
-            password:"",
-          })
-          navigate("/");
+          // console.log(loginData);
+          let authUser=allRegisteredUser.find((user)=>{
+               return(
+                    user.email===email &&
+                    user.password===password
+               );
+          });
+
+          console.log(authUser);
+
+          if(authUser){
+            toast.success(`Welcome ${authUser.user_name}`);
+            localStorage.setItem("userId",authUser.user_id);
+            // localStorage.removeItem("userId");
+            navigate("/");
+          }
+          else{
+            toast.error("access denied");
+            navigate("/register");
+            
+          }
   }
 
   return (
     <div>
       <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-      <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+      <Link to="/" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
           {/* <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/> */}
           GatherUp   
-      </a>
+      </Link>
       <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
