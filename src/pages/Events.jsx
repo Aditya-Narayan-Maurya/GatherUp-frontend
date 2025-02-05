@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import EventCard from '../components/EventCard';
 
 const Events = () => {
     let [allEvents,setAllEvents]=useState([]);
@@ -11,20 +12,17 @@ const Events = () => {
              fetchAllEvents();
     },[]);
   return (
-    <div>
-      <h1>I am Event Page</h1>
+    <div className='w-[80%] ml-[10%] pt-16'>
+      <h1 className='text-5xl font-bold font-serif text-center'>Events</h1>
+      <div className='flex flex-wrap justify-between'>
       {
-        allEvents.map((event)=>{
+        allEvents.map(({event_id,event_name,venue,description,date,event_image_url})=>{
             return (
-                <div key={event.event_id} style={{border:"2px solid black", padding:"2px",margin:"5px"}}>
-                <h1>Event Name :{event.event_name}</h1>
-                <h2>Event venue :{event.venue}</h2>
-                <p>description :{event.description}</p>
-                <p>date:{event.date}</p>
-                </div>
+                  <EventCard event_id={event_id} event_name={event_name} venue={venue} date={date} event_image_url={event_image_url}/>
             )
         })
       }
+      </div>
     </div>
   )
 }

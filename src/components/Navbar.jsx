@@ -9,17 +9,21 @@ const Navbar = () => {
     navigate("/login");
   }
   return (
-    <div className='flex justify-between bg-amber-50 h-16 '>
+    <div className='w-full h-16 flex flex-wrap justify-between bg-amber-50 fixed top-0 z-50'>
       <aside className='w-[30%]'>
         <img src="" alt="" />Logo
       </aside>
       <ul className='flex justify-end text-2xl mr-5 '>
         <li className='p-2 m-2 mr-4'><Link to="/">Home</Link></li>
+        <li className='p-2 m-2 mr-4'><Link to="/events">Events</Link></li>
+        <li className='p-2 m-2 mr-4'><Link to="/about">About</Link></li>
+        <li className='p-2 m-2 mr-4'><Link to="/contact">Contact</Link></li>
          {
-          userId
+           userId
            ? 
            <>
            <li className='p-2 m-2 mr-4'><Link to="/" onClick={logout}>Logout</Link></li>
+           <li className='p-2 m-2 mr-4'><Link to="/profile">Profile</Link></li>
            </>
            :
            <>
