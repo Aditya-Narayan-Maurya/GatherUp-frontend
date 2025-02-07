@@ -1,9 +1,40 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  let [user,setUser]=useState(null);
+
+
   let navigate=useNavigate();
   let userId=localStorage.getItem("userId");
+
+
+   useEffect(()=>{
+    async function fetchUserDeatils() {
+      let {data}=await axios.get(`http://localhost:8181/users/${userId}`);
+      setUser(data); 
+   } 
+   fetchUserDeatils();
+   },[]);
+
+   const handleHomesClick = () => {
+    if (user?.role === "admin") {
+      navigate("/admin"); // Admin ke liye alag route
+    } else {
+      navigate("/"); // Normal user ke liye
+    }
+  };
+
+  //hadle events click 
+  const handleEventsClick = () => {
+    if (user?.role === "admin") {
+      navigate("/admin/events"); // Admin ke liye alag route
+    } else {
+      navigate("/events"); // Normal user ke liye
+    }
+  };
+
   let logout=()=>{
     localStorage.removeItem("userId");
     navigate("/login");
@@ -14,21 +45,28 @@ const Navbar = () => {
         <img src="" alt="" />Logo
       </aside>
       <ul className='flex justify-end text-2xl mr-5 '>
-        <li className='p-2 m-2 mr-4'><Link to="/">Home</Link></li>
-        <li className='p-2 m-2 mr-4'><Link to="/events">Events</Link></li>
-        <li className='p-2 m-2 mr-4'><Link to="/about">About</Link></li>
-        <li className='p-2 m-2 mr-4'><Link to="/contact">Contact</Link></li>
+        <li onClick={handleHomesClick} className='p-2 m-2 mr-8'>Home</li>
+        <li  className='p-2 m-2 mr-4'><Link to="/about">About</Link></li>
+        {/* <li className='p-2 m-2 mr-4'><Link to="/contact">Contact</Link></li> */}
+        {/* {
+          user?.role==="admin"
+          ?
+          <li>My Events</li>
+          :
+          <li>My Regisrations</li>
+        } */}
          {
            userId
            ? 
            <>
-           <li className='p-2 m-2 mr-4'><Link to="/" onClick={logout}>Logout</Link></li>
-           <li className='p-2 m-2 mr-4'><Link to="/profile">Profile</Link></li>
+           <li onClick={handleEventsClick} className='p-2 m-2 mr-4'>Events</li>
+           <li className='p-2 m-2 mr-8'><Link to="/" onClick={logout}>Logout</Link></li>
+           <li className='p-2 m-2 mr-8'><Link to="/profile">Profile</Link></li>
            </>
            :
            <>
-           <li className='p-2 m-2 mr-4'><Link to="/register">Register</Link></li>
-           <li className='p-2 m-2 mr-4'><Link to="/login">Login</Link></li>
+           <li className='p-2 m-2 mr-8'><Link to="/register">Register</Link></li>
+           <li className='p-2 m-2 mr-8'><Link to="/login">Login</Link></li>
            </>
          }
         

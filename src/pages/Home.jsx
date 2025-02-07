@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import image2 from '../assets/home-page-images/homeimage2.avif';
 import { Link } from 'react-router-dom';
 
 function Home() {
+
   return (
     <div  
     className="w-full min-h-screen pt-16  relative flex justify-center align-middle items-center">
@@ -17,7 +18,7 @@ function Home() {
       <Link to={"/events"}><button className='border rounded-2xl bg-[#48A6A7] hover:bg-[#9ACBD0] hover:text-black p-3 mt-4 text-center text-xl cursor-pointer'>Explore Events</button> </Link>
      </div>
      
-     {/* <button>Create Events</button> */}
+
       
     </div>
   )

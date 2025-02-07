@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import MyRegistrationCart from '../components/MyRegistrationCart';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const MyRegistrations = () => {
     let userId=localStorage.getItem("userId");
@@ -14,10 +15,17 @@ const MyRegistrations = () => {
     },[])
     // console.log(registrations);
   return (
-    <div className='w-[80%] ml-[10%] pt-16' >
+    <div className='w-[80%] ml-[10%] pt-16 min-h-screen' >
       <h1 className='text-5xl font-bold font-serif text-center'>My Registrations</h1>
-      <div className='flex flex-wrap justify-between ' >
+      <div className='flex flex-wrap justify-center ' >
       {
+         registrations.length===0
+         ?
+         <>
+         <h1 className='text-2xl text-center w-full'>No event joined by you</h1><br />
+         <Link to={`/registrations/user/${userId}`}><button className='border rounded-2xl bg-[#48A6A7] hover:bg-[#9ACBD0] hover:text-black p-3 mt-4 text-center text-xl cursor-pointer'>Join Events</button> </Link>
+         </>
+         :
         registrations.map(({registration_id,registration_date,status,event:{event_id},user_id})=>{
             return (
                 <div key={registration_id}>

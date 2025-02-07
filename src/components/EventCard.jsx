@@ -12,8 +12,8 @@ const EventCard = ({event_id,event_name,venue,date="",event_image_url}) => {
     console.log();
   return (
     <div className='w-96 m-3 p-2 border border-[#b1aaaa] rounded-xl' key={event_id}>
-      <img src={event_image_url}
-       alt="not found" className='w-full h-52 p-2 rounded-2xl'/>
+      <img src={event_image_url}alt="not found" onError={(e)=>e.target.src="https://eventoempresa.com/wp-content/uploads/2020/03/empresas-organizacion-de-eventos-en-barcelona-mice.jpg"}
+      className='w-full h-52 p-2 rounded-2xl'/>
        <div className='m-2'>
         <h1 className='text-2xl font-bold'>{event_name}</h1>
         <h2 className='text-base'>Date:{getDate(date)}</h2>

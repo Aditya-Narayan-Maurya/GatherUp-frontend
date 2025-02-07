@@ -38,8 +38,12 @@ const Login = () => {
           });
 
           console.log(authUser);
-
-          if(authUser){
+          if(authUser.role==="admin"){
+            toast.success(`Welcome ${authUser.user_name}`);
+            localStorage.setItem("userId",authUser.user_id);
+            navigate("/admin");
+          }
+          else if(authUser){
             toast.success(`Welcome ${authUser.user_name}`);
             localStorage.setItem("userId",authUser.user_id);
             // localStorage.removeItem("userId");
