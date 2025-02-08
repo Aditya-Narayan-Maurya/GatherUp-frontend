@@ -38,7 +38,7 @@ const MyRegistrationCart = ({registration_id,registration_date,status:initialSta
         }
 
         ); 
-        console.log(data);
+        // console.log(data);
         setStatus("cancel");
           
     }
@@ -53,7 +53,7 @@ const MyRegistrationCart = ({registration_id,registration_date,status:initialSta
             }
         }
         ); 
-        console.log(data);
+        // console.log(data);
         setStatus("registered");
           
     }

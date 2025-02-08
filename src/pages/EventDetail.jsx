@@ -45,7 +45,7 @@ const EventDetail = () => {
                     event_id==eventId && user_id==userId
                   )
              })
-             console.log("exist_Registration",exist_Registration);
+            //  console.log("exist_Registration",exist_Registration);
              exist_Registration ===undefined
              ?
              (async function register() {
@@ -72,7 +72,7 @@ const EventDetail = () => {
     }
     }
 
-    console.log(event);
+    // console.log(event);
     // console.log(date.slice(0,10));
     let getDate=(date)=>{
       return  date.slice(0,10);
@@ -81,7 +81,7 @@ let getTime=(date)=>{
     return  date.slice(11,20);
 }
   return (
-    <div className='w-[60%] min-h-screen ml-[20%]  p-[2%] pt-16'>
+    <div className='w-[60%] min-h-screen ml-[20%]  p-[2%] pt-22'>
       <h1 className='text-5xl text-center font-semibold font-sans  p-2 '>Event Details</h1>
       <img src={event?.event_image_url} alt="" onError={(e)=>e.target.src="https://eventoempresa.com/wp-content/uploads/2020/03/empresas-organizacion-de-eventos-en-barcelona-mice.jpg"}
        className='w-full h-96 border rounded-2xl border-amber-50'/>
@@ -100,8 +100,8 @@ let getTime=(date)=>{
         ?
         <>
         <div className='flex '>
-        <Link to={`/updateEvent/${event?.event_id}`}><button className='border rounded-2xl bg-[#EED3D9] p-2 mt-2 w-28 text-center text-xl cursor-pointer'>Edit</button></Link>
-        <button onClick={deleteEvent} className='border rounded-2xl bg-[#EED3D9] p-2 mt-2 w-28 text-center text-xl cursor-pointer ml-3  '>Delete</button>
+        <Link to={`/updateEvent/${event?.event_id}`}><button className=' rounded-2xl bg-[#9ACBD0] hover:bg-[#E8F9FF] hover:text-black p-3 mt-4 text-center text-xl cursor-pointer'>Edit Event</button></Link>
+        <button onClick={deleteEvent} className='ml-3 rounded-2xl bg-[#9ACBD0] hover:bg-[#E8F9FF] hover:text-black p-3 mt-4 text-center text-xl cursor-pointer'>Delete</button>
         </div>
         </>
         :

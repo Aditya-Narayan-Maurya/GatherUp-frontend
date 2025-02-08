@@ -4,7 +4,7 @@ import { FaUsers, FaRegLightbulb, FaStar } from "react-icons/fa";
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6 pt-16">
+    <div className="animated-gradient min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6 pt-16">
       <div className="max-w-4xl text-center">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">Welcome to GatherUp 🎉</h1>
         <p className="text-gray-600 text-lg mb-6">

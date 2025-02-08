@@ -1,5 +1,27 @@
 @import "tailwindcss";
 
+*{
+    font-family: 'Inter', sans-serif;
+}
+h1{
+    font-family: "Poppins", serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+
 a{
     text-decoration: none;
 }
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .animated-gradient {
+    background: linear-gradient(45deg, #C5BAFF, #C4D9FF, #E8F9FF, #FBFBFB);
+    background-size: 400% 400%;
+    animation: gradientAnimation 90s ease infinite;
+  }

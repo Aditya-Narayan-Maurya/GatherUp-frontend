@@ -19,10 +19,11 @@ import EditEvent from './pages/EditEvent';
 import AdminEvents from './pages/AdminEvents';
 import AdminHome from './pages/AdminHome';
 import EditUser from './pages/EditUser';
+import PopularEvents from './pages/PopularEvents';
 
 const App = () => {
   return (
-    <div>
+    <div className='animated-gradient'>
       <Toaster/>
         <BrowserRouter>
         <Navbar/>
@@ -47,7 +48,7 @@ const App = () => {
             <Route path='/admin/events' element={<PrivateRoute><AdminEvents/></PrivateRoute>}/>
         </Routes>
         {/* <EventCard/> */}
-        
+        {/* <PopularEvents/> */}
         {/* <AdminHome/> */}
         <Footer/>
         </BrowserRouter>
