@@ -18,14 +18,17 @@ const Navbar = () => {
       setUser(data); 
    } 
    fetchUserDeatils();
-   },[]);
+   },[userId]);
 
    const handleHomesClick = () => {
     // console.log(user);
     if (user?.role === "admin") {
       navigate("/admin"); // Admin ke liye alag route
-    } else{
+    } else if(user?.role === "user"){
       navigate("/"); // Normal user ke liye
+    }
+    else{
+      navigate("/");
     }
   };
 
@@ -34,6 +37,8 @@ const Navbar = () => {
     // console.log(user);
     if (user?.role === "admin") {
       navigate("/admin/events"); // Admin ke liye alag route
+    }else if(user?.role === "user"){
+      navigate("/events"); // Normal user ke liye
     } else {
       navigate("/events"); // Normal user ke liye
     }

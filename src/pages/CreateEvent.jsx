@@ -35,7 +35,7 @@ const CreateEvent = () => {
                 date:"",
                 description:""
             })
-            navigate("/");
+            navigate("/admin");
           }).catch(()=>{
             toast.error("Event not created");
           })

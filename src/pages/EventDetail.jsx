@@ -12,6 +12,8 @@ const EventDetail = () => {
     let [event,setEvent]=useState(null);
     let [allRegistrationByUser,setAllRegistrationByUser]=useState([]);
 
+    // let [existRegistration,setExistRegistration]=useState(undefined);
+
     let [allFeedback,setAllFeedback]=useState(null);
     let [feedback,setFeedback]=useState({
       rating:3,
@@ -53,6 +55,13 @@ const EventDetail = () => {
           }
           fetchFeedbackByEvent();
 
+      //     let exist_Registration=allRegistrationByUser?.find(({registration_id,event:{event_id},user:{user_id},status,registration_date})=>{
+      //       return(
+      //         event_id==id && user_id==userId
+      //       )
+      //  })
+      //  setExistRegistration(exist_Registration);
+
     },[state,])
 
     let joinEvent=(userId,eventId)=>{
@@ -63,6 +72,7 @@ const EventDetail = () => {
                     event_id==eventId && user_id==userId
                   )
              })
+            //  setExistRegistration(exist_Registration);
             //  console.log("exist_Registration",exist_Registration);
              exist_Registration ===undefined
              ?
@@ -76,6 +86,8 @@ const EventDetail = () => {
             )()
              :
              toast.error("You have already registered");
+
+            //  setState(!state);
     }
 
     let deleteEvent=()=>{
@@ -124,8 +136,14 @@ let handleSubmit=async (e)=>{
   })
 }
 
-let editFeedback=()=>{
-
+let editFeedback=(feedback_id,raing,comments)=>{
+     setFeedback(
+      {
+        rating:raing,
+        comments:comments
+      }
+     );
+     deleteFeedback(feedback_id);
 }
 
 let deleteFeedback=(feedback_id)=>{
@@ -174,7 +192,14 @@ let deleteFeedback=(feedback_id)=>{
         </>
         :
         <>
-        <Link to={`/registrations/user/${userId}`}><button onClick={()=>joinEvent(userId,id)} className='border rounded-2xl bg-[#EED3D9] p-2 mt-2 w-28 text-center text-xl cursor-pointer'>Join</button></Link>
+          <Link to={`/registrations/user/${userId}`}><button onClick={()=>joinEvent(userId,id)} className='border rounded-2xl bg-[#EED3D9] p-2 mt-2 w-28 text-center text-xl cursor-pointer'>Join</button></Link>
+        {/* {
+          existRegistration===undefined
+          ?
+          :
+          <Link to={`/registrations/user/${userId}`}><button onClick={()=>joinEvent(userId,id)} className='border rounded-2xl bg-[#EED3D9] p-2 mt-2 w-28 text-center text-xl cursor-pointer'>Joined</button></Link>
+
+        } */}
         <br />
         <br />
 
@@ -224,7 +249,8 @@ let deleteFeedback=(feedback_id)=>{
                feedback?.user?.role==="user" && feedback?.user?.user_id==userId
                ?
                <>
-              <button onClick={()=>deleteFeedback(feedback?.feedback_id)} className=' rounded-xl text-white bg-[red] hover:bg-[#E8F9FF] hover:text-black p-2 mt-4 text-center text-base cursor-pointer'>Delete</button>
+              <button onClick={()=>deleteFeedback(feedback?.feedback_id)} className=' rounded-xl text-white bg-[red] hover:bg-[#E8F9FF] hover:text-black p-2 px-4 mt-4 text-center text-base cursor-pointer mr-2.5'>Delete</button>
+              <button onClick={()=>editFeedback(feedback?.feedback_id,feedback?.rating,feedback?.comments)} className=' rounded-xl text-white bg-[red] hover:bg-[#E8F9FF] hover:text-black p-2 px-4 mt-4 text-center text-base cursor-pointer'>Edit</button>
                </>
                : 
                <>

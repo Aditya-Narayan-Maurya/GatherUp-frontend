@@ -13,7 +13,7 @@ const AdminEvents = () => {
                 setAllEvents(data);
              }
              fetchAllEvents();
-    },[]);
+    },[userId]);
   return (
     <div className='w-[80%] ml-[10%] pt-22 min-h-screen'>
       <h1 className='text-5xl font-bold font-serif text-center'>Your Events</h1>
