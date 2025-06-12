@@ -27,23 +27,54 @@ const EditUser = () => {
          setUpdateUser({...updateUser,[name]:value});
   }
 
-  let handleSubmit=(e)=>{
-    e.preventDefault();
-    axios.put(`http://localhost:8181/users/${userId}`,updateUser).then(()=>{
-        toast.success("Profile updated successfully");
-        setUpdateUser({
-            user_name:"",
-            email:"",
-            phone_number:"",
-            password:"",
-            role:""
-        })
-        navigate("/profile");
-    }).catch(()=>{
-        toast.error("Not updated");
-    })
-          
+  let handleSubmit = (e) => {
+  e.preventDefault();
+
+  // Validation regex
+  const nameRegex = /^[A-Za-z\s]{3,}$/;
+  const phoneRegex = /^[987][0-9]{9}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&]).{6,}$/;
+
+  let { user_name, email, phone_number, password } = updateUser;
+
+  // Validations
+  if (!nameRegex.test(user_name)) {
+    toast.error("Enter a valid name (min 3 letters).");
+    return;
   }
+  if (!emailRegex.test(email)) {
+    toast.error("Enter a valid email.");
+    return;
+  }
+  if (!phoneRegex.test(phone_number)) {
+    toast.error("Phone number must be 10 digits and start with 9, 8, or 7.");
+    return;
+  }
+  if (!passwordRegex.test(password)) {
+    toast.error("Password must be 6+ characters with letter, number, and special character.");
+    return;
+  }
+
+  // If all validations pass
+  axios
+    .put(`http://localhost:8181/users/${userId}`, updateUser)
+    .then(() => {
+      toast.success("Profile updated successfully");
+      setUpdateUser({
+        user_name: "",
+        email: "",
+        phone_number: "",
+        password: "",
+        role: "",
+      });
+      navigate("/profile");
+    })
+    .catch(() => {
+      toast.error("Not updated");
+    });
+};
+
 
 
   return (

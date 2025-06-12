@@ -18,23 +18,54 @@ const Register = () => {
          setRegisterData({...registerData,[name]:value});
   }
 
-  let handleSubmit=(e)=>{
-          e.preventDefault();
-          axios.post("http://localhost:8181/users",registerData).then(()=>{
-            toast.success("Register Successfully");
-            // console.log(registerData);
-            setRegisterData({
-              user_name:"",
-              email:"",
-              phone_number:"",
-              password:"",
-              role:""
-            })
-            navigate("/login");
-          }).catch(()=>{
-            toast.error("Not Registered");
-          })
+  let handleSubmit = (e) => {
+  e.preventDefault();
+
+  // Basic validations abhi ke liye
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^[987][0-9]{9}$/;
+  const nameRegex = /^[A-Za-z\s]{3,}$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&]).{6,}$/;
+
+  if (!nameRegex.test(user_name)) {
+    toast.error("Enter a valid name (min 3 characters, only letters).");
+    return;
   }
+  if (!emailRegex.test(email)) {
+    toast.error("Enter a valid email address.");
+    return;
+  }
+  if (!phoneRegex.test(phone_number)) {
+    toast.error("Phone number must be 10 digits and start with 9 or 8 or 7");
+    return;
+  }
+  if (!passwordRegex.test(password)) {
+    toast.error("Password must be 6+ characters, include number & special char.");
+    return;
+  }
+  if (!role) {
+    toast.error("Please select a role.");
+    return;
+  }
+
+  // If all validations pass, send request
+  axios.post("http://localhost:8181/users", registerData)
+    .then(() => {
+      toast.success("Registered Successfully");
+      setRegisterData({
+        user_name: "",
+        email: "",
+        phone_number: "",
+        password: "",
+        role: ""
+      });
+      navigate("/login");
+    })
+    .catch(() => {
+      toast.error("Registration Failed");
+    });
+};
+
 
   return (
     <div className='pt-16'>
@@ -61,12 +92,12 @@ const Register = () => {
                   </div>
 
                   <div>
-                      <label htmlFor="phoneNo" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Phone no:-</label>
-                      <input type="tel" name="phone_number" id="phoneNo" placeholder="Enter Your phoneNo" value={phone_number} onChange={handleChange} required="" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                      <label htmlFor="phoneNo" class  Name="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Phone no:-</label>
+                      <input type="tel" name="phone_number" id="phoneNo" placeholder="Enter Your phoneNo" value={phone_number} onChange={handleChange} required="" maxLength={10} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                   </div>
                   <div>
                       <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password:-</label>
-                      <input type="password" name="password" id="password" placeholder="••••••••" value={password} onChange={handleChange}  required="" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                      <input type="password" name="password" id="password" placeholder="••••••••" value={password} onChange={handleChange}  required="" minLength={6} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                   </div>
                   
                   
